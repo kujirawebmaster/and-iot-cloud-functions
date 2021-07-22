@@ -1,0 +1,16 @@
+version: '3'
+services:
+  backend:
+    build: ./docker/backend
+    container_name: and-iot-cloud-functions-backend
+    volumes:
+      - ./backend:/app
+    command: "npm run start:dev"
+    ports:
+      - "3001:${SERVER_PORT}"
+      - 9099:9099 # Auth
+      - 4000:4000 # Emulator Suite UI
+      - 5001:5001 # Cloud Functions
+      - 8080:8080 # Cloud Firestore
+    environment:
+      - PORT=${SERVER_PORT}
