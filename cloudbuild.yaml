@@ -1,18 +1,6 @@
 timeout: 1800s
 steps:
 
-  - id: 'Install: backend'
-    name: node
-    dir: './backend'
-    entrypoint: yarn
-    args: ['install']
-
-  - id: 'Build: backend'
-    name: node
-    dir: './backend'
-    entrypoint: yarn
-    args: ['build']
-
   - id: 'Deploy: backend'
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: 'bash'
