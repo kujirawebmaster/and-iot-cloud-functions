@@ -1,6 +1,18 @@
 timeout: 1800s
 steps:
 
+  - id: 'Install: backend'
+    name: node:14
+    dir: './backend'
+    entrypoint: yarn
+    args: ['install']
+
+  - id: 'Build: backend'
+    name: node:14
+    dir: './backend'
+    entrypoint: yarn
+    args: ['build']
+
   - id: 'Deploy: backend'
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: 'bash'
@@ -10,7 +22,7 @@ steps:
       - functions
       - deploy
       - ${_FUNCTION_NAME}
-      - --runtime nodejs14
+      - --runtime=nodejs14
       - --region=${_FUNCTION_REGION}
       - --source=.
       - --trigger-http
