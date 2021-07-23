@@ -22,6 +22,7 @@ steps:
       - functions
       - deploy
       - ${_FUNCTION_NAME}
+      - --entry-point=api
       - --runtime=nodejs14
       - --region=${_FUNCTION_REGION}
       - --source=.

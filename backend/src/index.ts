@@ -14,6 +14,7 @@ export const createNestServer = async (expressInstance) => {
   );
 
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.setGlobalPrefix('api');
   app.enableCors();
 
   return app.init();
