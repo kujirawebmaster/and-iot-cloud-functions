@@ -71,7 +71,7 @@ export class AppController {
     if (requestHeaders.host !== undefined) {
       delete requestHeaders.host
     }
-    return this.httpService.post(url, requestBody, {
+    return this.httpService.put(url, requestBody, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
@@ -94,7 +94,7 @@ export class AppController {
     if (requestHeaders.host !== undefined) {
       delete requestHeaders.host
     }
-    return this.httpService.post(url, requestBody, {
+    return this.httpService.delete(url, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
