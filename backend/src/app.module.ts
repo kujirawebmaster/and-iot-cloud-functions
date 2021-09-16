@@ -3,6 +3,8 @@ import { Module, } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { BaycomController } from './baycom.controller';
+import { keyvoxController } from './keyvox.controller';
 
 @Module({
   imports: [
@@ -11,7 +13,11 @@ import { AppService } from './app.service';
       maxRedirects: 5,
     }),
   ],
-  controllers: [AppController],
+  controllers: [
+    AppController,
+    BaycomController,
+    keyvoxController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}
