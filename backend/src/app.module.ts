@@ -4,7 +4,7 @@ import { HttpModule } from '@nestjs/axios';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BaycomController } from './baycom.controller';
-import { keyvoxController } from './keyvox.controller';
+import { KeyvoxController } from './keyvox.controller';
 
 @Module({
   imports: [
@@ -16,7 +16,7 @@ import { keyvoxController } from './keyvox.controller';
   controllers: [
     AppController,
     BaycomController,
-    keyvoxController,
+    KeyvoxController,
   ],
   providers: [AppService],
 })
