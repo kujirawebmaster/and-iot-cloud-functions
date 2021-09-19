@@ -1,9 +1,9 @@
-import { Controller, HttpException, Request, Get, Post, Put, Delete, Req, Param, Query, Logger } from '@nestjs/common';
+import { Controller, HttpException, Request, Get, Post, Put, Delete, Req, Param, Query, Logger, InternalServerErrorException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios'
 import { catchError, map } from 'rxjs';
 const qs = require('qs');
 
-const baseUrl = 'https://eco.blockchainlock.io/apitest/bacs/v1/';
+const baseUrl = 'https://eco.blockchainlock.io/api/eagle-pms/v1/';
 
 @Controller('keyvox')
 export class KeyvoxController {
@@ -22,20 +22,16 @@ export class KeyvoxController {
     const queryStr = qs.stringify(queries);
     const url = baseUrl + params['0'] + (queryStr ? '?' + queryStr : '');
     const requestHeaders: any = request.headers;
-    if (requestHeaders.host === undefined) {
-      requestHeaders.host = 'default.pms'
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
     }
-
     this.logger.log(`url = ${url}`);
     this.logger.log(`headers = ${JSON.stringify(requestHeaders)}`);
-
     return this.httpService.get(url, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
-      catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
-      }),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -49,21 +45,17 @@ export class KeyvoxController {
     const url = baseUrl + params['0'] + (queryStr ? '?' + queryStr : '');
     const requestBody = request.body;
     const requestHeaders: any = request.headers;
-    if (requestHeaders.host === undefined) {
-      requestHeaders.host = 'default.pms'
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
     }
-
     this.logger.log(`url = ${url}`);
     this.logger.log(`body = ${JSON.stringify(requestBody)}`);
     this.logger.log(`headers = ${JSON.stringify(requestHeaders)}`);
-
     return this.httpService.post(url, requestBody, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
-      catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
-      }),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -77,21 +69,17 @@ export class KeyvoxController {
     const url = baseUrl + params['0'] + (queryStr ? '?' + queryStr : '');
     const requestBody = request.body;
     const requestHeaders: any = request.headers;
-    if (requestHeaders.host === undefined) {
-      requestHeaders.host = 'default.pms'
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
     }
-
     this.logger.log(`url = ${url}`);
     this.logger.log(`body = ${JSON.stringify(requestBody)}`);
     this.logger.log(`headers = ${JSON.stringify(requestHeaders)}`);
-
     return this.httpService.put(url, requestBody, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
-      catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
-      }),
+      catchError(e => this.errorHandler(e)),
     );
   }
 
@@ -105,21 +93,25 @@ export class KeyvoxController {
     const url = baseUrl + params['0'] + (queryStr ? '?' + queryStr : '');
     const requestBody = request.body;
     const requestHeaders: any = request.headers;
-    if (requestHeaders.host === undefined) {
-      requestHeaders.host = 'default.pms'
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
     }
-
     this.logger.log(`url = ${url}`);
     this.logger.log(`body = ${JSON.stringify(requestBody)}`);
     this.logger.log(`headers = ${JSON.stringify(requestHeaders)}`);
-
     return this.httpService.delete(url, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
-      catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
-      }),
+      catchError(e => this.errorHandler(e)),
     );
+  }
+
+  private async errorHandler(error: any) {
+    this.logger.log(`error = ${error}`);
+    if (error.response) {
+      throw new HttpException(error.response.data, error.response.status);
+    }
+    throw new InternalServerErrorException(error);
   }
 }
