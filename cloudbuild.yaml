@@ -4,14 +4,14 @@ steps:
   - id: 'Install: backend'
     name: node:18
     dir: './backend'
-    entrypoint: yarn
+    entrypoint: npm
     args: ['install']
 
   - id: 'Build: backend'
     name: node:18
     dir: './backend'
-    entrypoint: yarn
-    args: ['build']
+    entrypoint: npm
+    args: ['run', 'build']
 
   - id: 'Deploy: backend'
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
