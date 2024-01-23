@@ -14,11 +14,9 @@ steps:
     args: ['run', 'build']
 
   - id: 'Deploy: backend'
-    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: 'bash'
+    name: "gcr.io/cloud-builders/gcloud"
     dir: './backend'
     args:
-      - gcloud
       - functions
       - deploy
       - ${_FUNCTION_NAME}
