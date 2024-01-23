@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:18-alpine
 
 # RUN apk update
 # RUN apk add g++ make python3 libtool autoconf automake
