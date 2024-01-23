@@ -12,10 +12,10 @@
 # below:
 .git
 .gitignore
-node_modules
+/node_modules
 #!include:.gitignore
 
 # add
-!dist
-src
-test
+!/dist
+/src
+/test
