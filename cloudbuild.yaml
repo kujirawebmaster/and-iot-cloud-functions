@@ -6,6 +6,8 @@ steps:
     dir: './backend'
     entrypoint: npm
     args: ['install']
+    waitFor:
+      - 'Install: backend'
 
   - id: 'Build: backend'
     name: node:18
@@ -28,3 +30,5 @@ steps:
       - --allow-unauthenticated
       - --egress-settings=all
       - --vpc-connector=projects/$PROJECT_ID/locations/${_VPC_ACCESS_REGION}/connectors/${_VPC_ACCESS_CONNECTOR_NAME}
+    waitFor:
+      - 'Build: backend'
