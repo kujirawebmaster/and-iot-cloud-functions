@@ -2,7 +2,7 @@ timeout: 1800s
 steps:
 
   - id: 'Install: backend'
-    name: node:14
+    name: node:18
     dir: './backend'
     entrypoint: yarn
     args: ['install']
