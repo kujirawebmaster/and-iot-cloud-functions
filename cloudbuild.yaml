@@ -15,6 +15,17 @@ steps:
     waitFor:
       - 'Install: backend'
 
+  - id: 'Configuration: backend - package.json'
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: /bin/sh
+    dir: './backend'
+    args:
+    - "-c"
+    - |
+      cp ./package.json ./dist/
+    waitFor:
+      - 'Build: backend'
+
   - id: 'Deploy: backend'
     name: "gcr.io/cloud-builders/gcloud"
     dir: './backend'
@@ -25,10 +36,10 @@ steps:
       - --entry-point=api
       - --runtime=nodejs18
       - --region=${_FUNCTION_REGION}
-      - --source=.
+      - --source=./dist
       - --trigger-http
       - --allow-unauthenticated
       - --egress-settings=all
       - --vpc-connector=projects/$PROJECT_ID/locations/${_VPC_ACCESS_REGION}/connectors/${_VPC_ACCESS_CONNECTOR_NAME}
     waitFor:
-      - 'Build: backend'
+      - 'Configuration: backend - package.json'
