@@ -1,31 +1,6 @@
 timeout: 1800s
 steps:
 
-  - id: 'Install: backend'
-    name: node:18
-    dir: './backend'
-    entrypoint: npm
-    args: ['install']
-
-  - id: 'Build: backend'
-    name: node:18
-    dir: './backend'
-    entrypoint: npm
-    args: ['run', 'build']
-    waitFor:
-      - 'Install: backend'
-
-  - id: 'Configuration: backend - package.json'
-    name: "gcr.io/cloud-builders/gcloud"
-    entrypoint: /bin/sh
-    dir: './backend'
-    args:
-    - "-c"
-    - |
-      cp ./package.json ./dist/
-    waitFor:
-      - 'Build: backend'
-
   - id: 'Deploy: backend'
     name: "gcr.io/cloud-builders/gcloud"
     dir: './backend'
@@ -36,10 +11,8 @@ steps:
       - --entry-point=api
       - --runtime=nodejs18
       - --region=${_FUNCTION_REGION}
-      - --source=./dist
+      - --source=.
       - --trigger-http
       - --allow-unauthenticated
       - --egress-settings=all
       - --vpc-connector=projects/$PROJECT_ID/locations/${_VPC_ACCESS_REGION}/connectors/${_VPC_ACCESS_CONNECTOR_NAME}
-    waitFor:
-      - 'Configuration: backend - package.json'
