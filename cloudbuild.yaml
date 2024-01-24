@@ -11,7 +11,7 @@ steps:
       - --entry-point=api
       - --runtime=nodejs18
       - --region=${_FUNCTION_REGION}
-      - --source=.
+      - --source=./dist
       - --trigger-http
       - --allow-unauthenticated
       - --egress-settings=all
