@@ -11,7 +11,7 @@ steps:
     name: node:18
     dir: './backend'
     entrypoint: npm
-    args: ['run', 'build']
+    args: ['run', 'build:prod']
     waitFor:
       - 'Install: backend'
 
