@@ -3,7 +3,7 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import { AppModule } from '@/app.module';
 import { HttpExceptionFilter } from '@/filters';
 import * as express from 'express';
-import * as functions from 'firebase-functions';
+import { onRequest } from "firebase-functions/v2/https";
 
 const server = express();
 
@@ -26,7 +26,7 @@ createNestServer(server)
     .then(v => console.log('Nest Ready'))
     .catch(err => console.error('Nest broken', err));
 
-export const api = functions.https.onRequest(server);
+export const api = onRequest(server);
 
 // import { NestFactory } from '@nestjs/core';
 // import { AppModule } from './app.module';
