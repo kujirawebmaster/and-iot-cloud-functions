@@ -25,15 +25,16 @@ export class PaymentByPayPayController {
     @Req() request: Request,
   ) {
     const baseUrl = HOST_PATH[environment];
-    this.logger.log(`baseUrl = ${baseUrl}`);
-
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
+    const requestHeaders = {
+      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
+      "content-type": request.headers["content-type"],
+      "Authorization": request.headers["authorization"],
+    };
+    this.logger.log(`baseUrl = ${baseUrl}`);
     this.logger.log(`url = ${url}`);
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
     return this.httpService.get(url, {
       headers: requestHeaders
     }).pipe(
@@ -52,14 +53,18 @@ export class PaymentByPayPayController {
     @Req() request: Request,
   ) {
     const baseUrl = HOST_PATH[environment];
-
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    const requestHeaders = {
+      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
+      "content-type": request.headers["content-type"],
+      "Authorization": request.headers["authorization"],
+    };
+    this.logger.log(`baseUrl = ${baseUrl}`);
+    this.logger.log(`url = ${url}`);
+    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
+    this.logger.log(`requestBody = ${JSON.stringify(requestBody)}`);
     return this.httpService.post(url, requestBody, {
       headers: requestHeaders
     }).pipe(
@@ -78,14 +83,18 @@ export class PaymentByPayPayController {
     @Req() request: Request,
   ) {
     const baseUrl = HOST_PATH[environment];
-
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    const requestHeaders = {
+      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
+      "content-type": request.headers["content-type"],
+      "Authorization": request.headers["authorization"],
+    };
+    this.logger.log(`baseUrl = ${baseUrl}`);
+    this.logger.log(`url = ${url}`);
+    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
+    this.logger.log(`requestBody = ${JSON.stringify(requestBody)}`);
     return this.httpService.put(url, requestBody, {
       headers: requestHeaders
     }).pipe(
@@ -104,13 +113,16 @@ export class PaymentByPayPayController {
     @Req() request: Request,
   ) {
     const baseUrl = HOST_PATH[environment];
-
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    const requestHeaders = {
+      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
+      "content-type": request.headers["content-type"],
+      "Authorization": request.headers["authorization"],
+    };
+    this.logger.log(`baseUrl = ${baseUrl}`);
+    this.logger.log(`url = ${url}`);
+    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
     return this.httpService.delete(url, {
       headers: requestHeaders
     }).pipe(
