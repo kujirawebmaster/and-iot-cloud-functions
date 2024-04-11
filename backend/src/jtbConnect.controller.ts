@@ -37,7 +37,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response?.data, e.response.status);
+        throw e;
       }),
     );
   }
@@ -65,7 +65,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response?.data, e.response.status);
+        throw e;
       }),
     );
   }
@@ -90,7 +90,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response?.data, e.response.status);
+        throw e;
       }),
     );
   }
@@ -115,7 +115,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response?.data, e.response.status);
+        throw e;
       }),
     );
   }
