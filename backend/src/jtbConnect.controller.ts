@@ -28,16 +28,16 @@ export class PmsJtbConnectController {
 
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    const requestHeaders = {
+      "Ocp-Apim-Subscription-Key": request.headers["ocp-apim-subscription-key"],
+      "content-type": request.headers["content-type"]
+    };
     return this.httpService.get(url, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
+        throw new HttpException(e.response?.data, e.response.status);
       }),
     );
   }
@@ -53,19 +53,19 @@ export class PmsJtbConnectController {
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders: any = request.headers;
+    const requestHeaders = {
+      "Ocp-Apim-Subscription-Key": request.headers["ocp-apim-subscription-key"],
+      "content-type": request.headers["content-type"]
+    };
     this.logger.log(`baseUrl = ${baseUrl}`);
     this.logger.log(`url = ${url}`);
     this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
     return this.httpService.post(url, requestBody, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
+        throw new HttpException(e.response?.data, e.response.status);
       }),
     );
   }
@@ -81,16 +81,16 @@ export class PmsJtbConnectController {
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    const requestHeaders = {
+      "Ocp-Apim-Subscription-Key": request.headers["ocp-apim-subscription-key"],
+      "content-type": request.headers["content-type"]
+    };
     return this.httpService.put(url, requestBody, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
+        throw new HttpException(e.response?.data, e.response.status);
       }),
     );
   }
@@ -106,16 +106,16 @@ export class PmsJtbConnectController {
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders: any = request.headers;
-    if (requestHeaders.host !== undefined) {
-      delete requestHeaders.host
-    }
+    const requestHeaders = {
+      "Ocp-Apim-Subscription-Key": request.headers["ocp-apim-subscription-key"],
+      "content-type": request.headers["content-type"]
+    };
     return this.httpService.delete(url, {
       headers: requestHeaders
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        throw new HttpException(e.response.data, e.response.status);
+        throw new HttpException(e.response?.data, e.response.status);
       }),
     );
   }
