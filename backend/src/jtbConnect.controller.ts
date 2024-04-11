@@ -1,40 +1,37 @@
 import { Controller, HttpException, Request, Get, Post, Put, Delete, Req, Param, Query, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios'
+import { AppService } from './app.service';
 import { catchError, map } from 'rxjs';
 const qs = require('qs');
 
 const HOST_PATH = {
-  PROD: 'https://api.paypay.ne.jp',
-  STAGING: 'https://stg-api.sandbox.paypay.ne.jp',
-  PERF_MODE: 'https://perf-api.paypay.ne.jp',
+  production: 'https://dch.jtb.co.jp',
+  develop: 'https://stg.dch.jtb.co.jp',
+  local: 'https://stg.dch.jtb.co.jp',
 };
 
-@Controller(`payPay/:environment(PROD|STAGING|PERF_MODE)/`)
-export class PaymentByPayPayController {
-  private logger: Logger = new Logger(PaymentByPayPayController.name);
-
+@Controller('jtbConnect')
+export class PmsJtbConnectController {
   constructor(
     private readonly httpService: HttpService,
   ) {}
+  private logger: Logger = new Logger(PmsJtbConnectController.name);
+
 
   @Get('*')
   getApi(
-    @Param('environment') environment: 'PROD' | 'STAGING' | 'PERF_MODE',
     @Param() params: string[],
     @Query() queries: string[],
     @Req() request: Request,
   ) {
-    const baseUrl = HOST_PATH[environment];
+    const baseUrl = HOST_PATH[process.env.NODE_ENV ?? 'local'];
+
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
-    const requestHeaders = {
-      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
-      "content-type": request.headers["content-type"],
-      "Authorization": request.headers["authorization"],
-    };
-    this.logger.log(`baseUrl = ${baseUrl}`);
-    this.logger.log(`url = ${url}`);
-    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
+    const requestHeaders: any = request.headers;
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
+    }
     return this.httpService.get(url, {
       headers: requestHeaders
     }).pipe(
@@ -47,24 +44,22 @@ export class PaymentByPayPayController {
 
   @Post('*')
   postApi(
-    @Param('environment') environment: 'PROD' | 'STAGING' | 'PERF_MODE',
     @Param() params: string[],
     @Query() queries: string[],
     @Req() request: Request,
   ) {
-    const baseUrl = HOST_PATH[environment];
+    const baseUrl = HOST_PATH[process.env.NODE_ENV ?? 'local'];
+
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders = {
-      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
-      "content-type": request.headers["content-type"],
-      "Authorization": request.headers["authorization"],
-    };
+    const requestHeaders: any = request.headers;
     this.logger.log(`baseUrl = ${baseUrl}`);
     this.logger.log(`url = ${url}`);
     this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
-    this.logger.log(`requestBody = ${JSON.stringify(requestBody)}`);
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
+    }
     return this.httpService.post(url, requestBody, {
       headers: requestHeaders
     }).pipe(
@@ -77,24 +72,19 @@ export class PaymentByPayPayController {
 
   @Put('*')
   putApi(
-    @Param('environment') environment: 'PROD' | 'STAGING' | 'PERF_MODE',
     @Param() params: string[],
     @Query() queries: string[],
     @Req() request: Request,
   ) {
-    const baseUrl = HOST_PATH[environment];
+    const baseUrl = HOST_PATH[process.env.NODE_ENV ?? 'local'];
+
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
     const requestBody = request.body;
-    const requestHeaders = {
-      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
-      "content-type": request.headers["content-type"],
-      "Authorization": request.headers["authorization"],
-    };
-    this.logger.log(`baseUrl = ${baseUrl}`);
-    this.logger.log(`url = ${url}`);
-    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
-    this.logger.log(`requestBody = ${JSON.stringify(requestBody)}`);
+    const requestHeaders: any = request.headers;
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
+    }
     return this.httpService.put(url, requestBody, {
       headers: requestHeaders
     }).pipe(
@@ -107,22 +97,19 @@ export class PaymentByPayPayController {
 
   @Delete('*')
   deleteApi(
-    @Param('environment') environment: 'PROD' | 'STAGING' | 'PERF_MODE',
     @Param() params: string[],
     @Query() queries: string[],
     @Req() request: Request,
   ) {
-    const baseUrl = HOST_PATH[environment];
+    const baseUrl = HOST_PATH[process.env.NODE_ENV ?? 'local'];
+
     const queryStr = qs.stringify(queries);
     const url = `${baseUrl}/${params['0']}${(queryStr ? '?' + queryStr : '')}`;
-    const requestHeaders = {
-      "X-ASSUME-MERCHANT": request.headers["x-assume-merchant"],
-      "content-type": request.headers["content-type"],
-      "Authorization": request.headers["authorization"],
-    };
-    this.logger.log(`baseUrl = ${baseUrl}`);
-    this.logger.log(`url = ${url}`);
-    this.logger.log(`requestHeaders = ${JSON.stringify(requestHeaders)}`);
+    const requestBody = request.body;
+    const requestHeaders: any = request.headers;
+    if (requestHeaders.host !== undefined) {
+      delete requestHeaders.host
+    }
     return this.httpService.delete(url, {
       headers: requestHeaders
     }).pipe(
