@@ -65,6 +65,8 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
+        this.logger.log(`error = ${e.toJSON()}`);
+        this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
         throw e;
       }),
     );
