@@ -13,6 +13,19 @@ steps:
     entrypoint: npm
     args: ['run', 'build:prod']
 
+  - id: 'Configuration: backend - secret'
+    name: "gcr.io/cloud-builders/gcloud"
+    entrypoint: /bin/sh
+    dir: './backend'
+    args:
+    - "-c"
+    - |
+      cat << EOF > .env.yaml
+      NODE_ENV: ${_NODE_ENV}
+      EOF
+    waitFor:
+      - 'Install: backend'
+
   - id: 'Deploy: backend'
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: 'bash'
@@ -30,3 +43,7 @@ steps:
       - --allow-unauthenticated
       - --egress-settings=all
       - --vpc-connector=projects/$PROJECT_ID/locations/${_VPC_ACCESS_REGION}/connectors/${_VPC_ACCESS_CONNECTOR_NAME}
+      - --env-vars-file=.env.yaml
+    waitFor:
+      - 'Build: backend'
+      - 'Configuration: backend - secret'
