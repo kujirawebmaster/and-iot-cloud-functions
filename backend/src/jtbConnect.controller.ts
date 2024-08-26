@@ -37,7 +37,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
         this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
         throw new HttpException(e.response?.data, e.response?.status);
       }),
@@ -67,7 +67,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
         this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
         throw new HttpException(e.response?.data, e.response?.status);
       }),
@@ -94,7 +94,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
         this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
         throw new HttpException(e.response?.data, e.response?.status);
       }),
@@ -121,7 +121,7 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
         this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
         throw new HttpException(e.response?.data, e.response?.status);
       }),
