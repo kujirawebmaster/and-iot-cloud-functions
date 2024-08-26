@@ -10,10 +10,7 @@ import { PmsJtbConnectController } from './jtbConnect.controller';
 
 @Module({
   imports: [
-    HttpModule.register({
-      timeout: 5000,
-      maxRedirects: 5,
-    }),
+    HttpModule,
   ],
   controllers: [
     AppController,
