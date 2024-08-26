@@ -37,9 +37,16 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
-        this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
-        throw new HttpException(e.response?.data, e.response?.status);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
+        if (e.response) {
+          this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
+          throw new HttpException(e.response?.data, e.response?.status);
+        }
+        else if (e.request) {
+          this.logger.log(`error.request = ${e.request}`);
+          throw new HttpException(e.request, e.status);
+        }
+        throw new HttpException(e.message, e.status);
       }),
     );
   }
@@ -67,9 +74,16 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
-        this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
-        throw new HttpException(e.response?.data, e.response?.status);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
+        if (e.response) {
+          this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
+          throw new HttpException(e.response?.data, e.response?.status);
+        }
+        else if (e.request) {
+          this.logger.log(`error.request = ${e.request}`);
+          throw new HttpException(e.request, e.status);
+        }
+        throw new HttpException(e.message, e.status);
       }),
     );
   }
@@ -94,9 +108,16 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
-        this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
-        throw new HttpException(e.response?.data, e.response?.status);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
+        if (e.response) {
+          this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
+          throw new HttpException(e.response?.data, e.response?.status);
+        }
+        else if (e.request) {
+          this.logger.log(`error.request = ${e.request}`);
+          throw new HttpException(e.request, e.status);
+        }
+        throw new HttpException(e.message, e.status);
       }),
     );
   }
@@ -121,9 +142,16 @@ export class PmsJtbConnectController {
     }).pipe(
       map(response => response.data),
       catchError(e => {
-        this.logger.log(`error = ${e.toJSON()}`);
-        this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
-        throw new HttpException(e.response?.data, e.response?.status);
+        this.logger.log(`error = ${JSON.stringify(e.toJSON())}`);
+        if (e.response) {
+          this.logger.log(`error.response.data = ${JSON.stringify(e.response?.data)}`);
+          throw new HttpException(e.response?.data, e.response?.status);
+        }
+        else if (e.request) {
+          this.logger.log(`error.request = ${e.request}`);
+          throw new HttpException(e.request, e.status);
+        }
+        throw new HttpException(e.message, e.status);
       }),
     );
   }
