@@ -1,7 +1,7 @@
 import { Controller, HttpException, Request, Get, Post, Put, Delete, Req, Param, Query, Logger, InternalServerErrorException } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios'
 import { catchError, map } from 'rxjs';
-import { maskHeadersForLog, formatErrorForLog } from './utils/logSanitizer';
+import { maskHeadersForLog, formatErrorForLog, summarizeBodyForLog } from './utils/logSanitizer';
 const qs = require('qs');
 
 const baseUrl = 'https://eco.blockchainlock.io/api/eagle-pms/v1/';
@@ -50,7 +50,7 @@ export class KeyvoxController {
       delete requestHeaders.host
     }
     this.logger.log(`url = ${url}`);
-    this.logger.log(`body = ${JSON.stringify(requestBody)}`);
+    this.logger.log(`bodyKeys = ${summarizeBodyForLog(requestBody)}`);
     this.logger.log(`headers = ${JSON.stringify(maskHeadersForLog(requestHeaders))}`);
     return this.httpService.post(url, requestBody, {
       headers: requestHeaders
@@ -74,7 +74,7 @@ export class KeyvoxController {
       delete requestHeaders.host
     }
     this.logger.log(`url = ${url}`);
-    this.logger.log(`body = ${JSON.stringify(requestBody)}`);
+    this.logger.log(`bodyKeys = ${summarizeBodyForLog(requestBody)}`);
     this.logger.log(`headers = ${JSON.stringify(maskHeadersForLog(requestHeaders))}`);
     return this.httpService.put(url, requestBody, {
       headers: requestHeaders
@@ -98,7 +98,7 @@ export class KeyvoxController {
       delete requestHeaders.host
     }
     this.logger.log(`url = ${url}`);
-    this.logger.log(`body = ${JSON.stringify(requestBody)}`);
+    this.logger.log(`bodyKeys = ${summarizeBodyForLog(requestBody)}`);
     this.logger.log(`headers = ${JSON.stringify(maskHeadersForLog(requestHeaders))}`);
     return this.httpService.delete(url, {
       headers: requestHeaders

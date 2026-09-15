@@ -1,7 +1,7 @@
 import { Controller, HttpException, Request, Get, Post, Put, Delete, Req, Param, Query, Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios'
 import { catchError, map } from 'rxjs';
-import { maskHeadersForLog, formatErrorForLog } from './utils/logSanitizer';
+import { maskHeadersForLog, formatErrorForLog, summarizeBodyForLog } from './utils/logSanitizer';
 const qs = require('qs');
 
 // 2026-11-01にPayPay側で旧ドメイン(api.paypay.ne.jp等)が廃止されるため新ドメインへ移行
@@ -73,7 +73,7 @@ export class PaymentByPayPayController {
     this.logger.log(`baseUrl = ${baseUrl}`);
     this.logger.log(`url = ${url}`);
     this.logger.log(`requestHeaders = ${JSON.stringify(maskHeadersForLog(requestHeaders))}`);
-    this.logger.log(`requestBody = ${JSON.stringify(requestBody)}`);
+    this.logger.log(`requestBodyKeys = ${summarizeBodyForLog(requestBody)}`);
     return this.httpService.post(url, requestBody, {
       headers: requestHeaders
     }).pipe(
@@ -110,7 +110,7 @@ export class PaymentByPayPayController {
     this.logger.log(`baseUrl = ${baseUrl}`);
     this.logger.log(`url = ${url}`);
     this.logger.log(`requestHeaders = ${JSON.stringify(maskHeadersForLog(requestHeaders))}`);
-    this.logger.log(`requestBody = ${JSON.stringify(requestBody)}`);
+    this.logger.log(`requestBodyKeys = ${summarizeBodyForLog(requestBody)}`);
     return this.httpService.put(url, requestBody, {
       headers: requestHeaders
     }).pipe(
