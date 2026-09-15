@@ -50,3 +50,11 @@ export const formatErrorForLog = (e: any) => JSON.stringify({
   // PayPayの401はレスポンス本文に追跡IDを含まないため、ここが唯一の手掛かりになる
   traceHeaders: pickTraceHeadersForLog(e.response?.headers),
 });
+
+// リクエストbodyには暗証番号(keyvox)や決済情報(payPay)が含まれるため、値は出さずトップレベルのキー名のみ出す
+export const summarizeBodyForLog = (body: any) => {
+  if (body === null || body === undefined) return String(body);
+  if (Array.isArray(body)) return `<array(${body.length})>`;
+  if (typeof body !== 'object') return `<${typeof body}>`;
+  return JSON.stringify(Object.keys(body));
+};
